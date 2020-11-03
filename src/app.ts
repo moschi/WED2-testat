@@ -6,6 +6,8 @@ import logger = require('morgan');
 import sassMiddleware = require('node-sass-middleware');
 import indexRouter = require('./routes/index');
 import usersRouter = require('./routes/users');
+import tasksRouter = require('./routes/tasks');
+import { builtinModules } from 'module';
 
 const app = express();
 
@@ -21,13 +23,14 @@ app.use(
   sassMiddleware({
     src: path.join(__dirname, 'public'),
     dest: path.join(__dirname, 'public'),
-    indentedSyntax: true, // true = .sass and false = .scss
+    indentedSyntax: false, // true = .sass and false = .scss
     sourceMap: true,
   }),
 );
 app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', indexRouter as express.Application);
 app.use('/users', usersRouter as express.Application);
+app.use('/tasks', tasksRouter as express.Application);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
@@ -36,7 +39,7 @@ app.use(function (req, res, next) {
 
 // error handler
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-app.use(() => (err: any, req: express.Request, res: express.Response, next: express.NextFunction) => {
+app.use(() => (err: any, req: express.Request, res: express.Response) => {
   // set locals, only providing error in development
   res.locals.message = err.message;
   res.locals.error = req.app.get('env') === 'development' ? err : {};

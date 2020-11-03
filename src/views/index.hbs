@@ -1,27 +1,32 @@
 <h1>{{title}}</h1>
-<nav>
-  <button>Create new Note</button>
+<nav class="display-section">
+  <a id="create-new" class="link-button" href="/tasks/new">Create new Note</a>
   <select name="style" id="style">
     <option value="dark">Dark-Style</option>
     <option value="light" selected>Light-Style</option>
   </select>
 </nav>
-<div id="todo-control">
-  <button>By finished Date</button>
-  <button>By created Date</button>
-  <button>By Importance Date</button>
-  <button>Show finished</button>
+<br />
+<div id="todo-control" class="display-section">
+  <a class="link-button{{#if isFinishedSorting}} active{{/if}}"
+    href="/tasks/sort/finished/direction/{{invertedDirection}}/showfinished/{{showfinished}}/">By finished Date</a>
+  <a class="link-button{{#if isCreationSorting}} active{{/if}}"
+    href="/tasks/sort/creation/direction/{{invertedDirection}}/showfinished/{{showfinished}}/">By created Date</a>
+  <a class="link-button{{#if isImportanceSorting}} active{{/if}}"
+    href="/tasks/sort/importance/direction/{{invertedDirection}}/showfinished/{{showfinished}}/">By Importance Date</a>
+  <a class="link-button link-button-toggle{{#if showfinished}} active{{/if}}"
+    href="/tasks/sort/{{sort}}/direction/{{direction}}/showfinished/{{invertedshowfinished}}/">Show finished</a>
 </div>
-<div id="todo-list">
+<br />
+<div id="todo-list" class="display-section">
   {{#each todos}}
-    <div class="todo-item">
-      <label for="finished"> Finished</label><br>
-      <input type="checkbox" id="finished" name="finished" checked="{{isFinished}}">
-      <h3>{{title}}</h3>
-      <textarea id="w3review" name="w3review" rows="4" cols="50">
-        {{description}}
-      </textarea>
-      <button>Edit</button><!-- Call function with appropriate ID -->
-    </div>
+  <div class="todo-item">
+    <label for="finished"> Finished</label>
+    <input type="checkbox" name="finished" readonly {{#if finished}}checked{{/if}} disabled>
+    <h3>{{title}}</h3>
+    <span class="task-description" >{{description}}</span>
+    <a class="link-button task-edit" href="/tasks/{{_id}}">Edit</a>
+  </div>
+  <br />
   {{/each}}
 </div>

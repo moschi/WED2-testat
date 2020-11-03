@@ -1,8 +1,49 @@
 body {
   padding: 50px;
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif; }
+  font-family: "Lucida Grande", Helvetica, Arial, sans-serif;
+  font-size: 14px;
+  box-sizing: content-box;
+  display: block; }
+
+.display-section {
+  display: block;
+  width: 100%; }
 
 a {
   color: #00B7FF; }
+
+#create-new {
+  float: left; }
+
+#todo-list {
+  display: flex; }
+
+.task-description {
+  border: 1px solid gray;
+  width: 100%;
+  min-height: 150px; }
+
+.todo-item {
+  padding: 15px;
+  border: 1px solid black;
+  border-radius: 30px;
+  display: block; }
+
+.link-button {
+  border: 1px solid black;
+  padding: 15px;
+  color: gray;
+  text-decoration: none;
+  margin: 2px; }
+  .link-button.active {
+    background: goldenrod;
+    color: black; }
+  .link-button.task-edit {
+    height: 50px; }
+
+.link-button-toggle {
+  cursor: pointer; }
+  .link-button-toggle.active {
+    background: lightgray; }
 
 /*# sourceMappingURL=style.css.map */

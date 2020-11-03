@@ -30,7 +30,7 @@ app.use(function (req, res, next) {
 });
 // error handler
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-app.use(function () { return function (err, req, res, next) {
+app.use(function () { return function (err, req, res) {
     // set locals, only providing error in development
     res.locals.message = err.message;
     res.locals.error = req.app.get('env') === 'development' ? err : {};

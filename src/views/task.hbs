@@ -1,0 +1,13 @@
+<form action="/tasks/{{_id}}" method="POST">
+  <div class="todo-item">
+    <span>{{_id}}</span>
+    <label for="finished">Finished</label><br>
+    <span>{{finished}}</span>
+    <input type="checkbox" name="finished" {{#if finished}}checked{{/if}}>
+    <input type="text" name="title" value="{{title}}">
+    <input type="number" name="importance" value="{{importance}}">
+    <input type="date" name="finishedBy" value="{{finishedBy}}">
+    <textarea name="desc" rows="4" cols="50">{{description}}</textarea>
+    <input class="link-button" type="submit" value="save">
+  </div>
+</form>
