@@ -1,2 +1,27 @@
 <h1>{{title}}</h1>
-<p>Welcome to {{title}}</p>
+<nav>
+  <button>Create new Note</button>
+  <select name="style" id="style">
+    <option value="dark">Dark-Style</option>
+    <option value="light" selected>Light-Style</option>
+  </select>
+</nav>
+<div id="todo-control">
+  <button>By finished Date</button>
+  <button>By created Date</button>
+  <button>By Importance Date</button>
+  <button>Show finished</button>
+</div>
+<div id="todo-list">
+  {{#each todos}}
+    <div class="todo-item">
+      <label for="finished"> Finished</label><br>
+      <input type="checkbox" id="finished" name="finished" checked="{{isFinished}}">
+      <h3>{{title}}</h3>
+      <textarea id="w3review" name="w3review" rows="4" cols="50">
+        {{description}}
+      </textarea>
+      <button>Edit</button><!-- Call function with appropriate ID -->
+    </div>
+  {{/each}}
+</div>

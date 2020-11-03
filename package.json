@@ -5,7 +5,7 @@
   "scripts": {
     "build": "tsc",
     "start": "node ./src/bin/www",
-    "start2": "node -r ./src/tsconfig-paths-bootstrap.js .",
+    "start:build": "npm run build && node -r ./src/tsconfig-paths-bootstrap.js .",
     "start:dev": "node -r dotenv/config -r tsconfig-paths/register -r ts-node/register ./src/bin/www.ts",
     "prettier": "prettier --config ./.prettierrc.js --write \"src/**/*.ts\""
 
