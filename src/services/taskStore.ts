@@ -5,10 +5,19 @@ export class Task {
     public title: string,
     public description: string,
     public importance: number,
-    public finishedBy: Date | null,
+    public finishedBy: Date | null | string,
     public finished: boolean,
-  ) {}
+  ) {
+    if (finishedBy == '') {
+      this.displayFinishedByDate = 'irgendwann';
+    } else {
+      console.log(finishedBy);
+      console.log(typeof finishedBy);
+      this.displayFinishedByDate = new Date(finishedBy as Date).toISOString().substr(0, 10);
+    }
+  }
 
+  public displayFinishedByDate: string;
   public creationDate = Date.now();
 }
 

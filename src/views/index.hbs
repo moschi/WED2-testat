@@ -1,32 +1,39 @@
-<h1>{{title}}</h1>
-<nav class="display-section">
-  <a id="create-new" class="link-button" href="/tasks/new">Create new Note</a>
-  <select name="style" id="style">
-    <option value="dark">Dark-Style</option>
-    <option value="light" selected>Light-Style</option>
-  </select>
-</nav>
-<br />
-<div id="todo-control" class="display-section">
-  <a class="link-button{{#if isFinishedSorting}} active{{/if}}"
-    href="/tasks/sort/finished/direction/{{invertedDirection}}/showfinished/{{showfinished}}/">By finished Date</a>
-  <a class="link-button{{#if isCreationSorting}} active{{/if}}"
-    href="/tasks/sort/creation/direction/{{invertedDirection}}/showfinished/{{showfinished}}/">By created Date</a>
-  <a class="link-button{{#if isImportanceSorting}} active{{/if}}"
-    href="/tasks/sort/importance/direction/{{invertedDirection}}/showfinished/{{showfinished}}/">By Importance Date</a>
-  <a class="link-button link-button-toggle{{#if showfinished}} active{{/if}}"
-    href="/tasks/sort/{{sort}}/direction/{{direction}}/showfinished/{{invertedshowfinished}}/">Show finished</a>
-</div>
-<br />
-<div id="todo-list" class="display-section">
-  {{#each todos}}
-  <div class="todo-item">
-    <label for="finished"> Finished</label>
-    <input type="checkbox" name="finished" readonly {{#if finished}}checked{{/if}} disabled>
-    <h3>{{title}}</h3>
-    <span class="task-description" >{{description}}</span>
-    <a class="link-button task-edit" href="/tasks/{{_id}}">Edit</a>
+<div id="task-overview">
+  <div id="todo-control" class="display-section">
+    <a class="link-button action{{#if isFinishedSorting}} active{{/if}} direction{{#if isDirectionDesc}}-desc{{/if}}{{#if isDirectionAsc}}-asc{{/if}}"
+      href="/tasks/sort/finished/">Nach Erledigt-Datum</a>
+    <a class="link-button action{{#if isCreationSorting}} active{{/if}} direction{{#if isDirectionDesc}}-desc{{/if}}{{#if isDirectionAsc}}-asc{{/if}}"
+      href="/tasks/sort/creation/">Nach Erstellungsdatum</a>
+    <a class="link-button action{{#if isImportanceSorting}} active{{/if}} direction{{#if isDirectionDesc}}-desc{{/if}}{{#if isDirectionAsc}}-asc{{/if}}"
+      href="/tasks/sort/importance/">Nach Priorität</a>
+    <a class="link-button action link-button-toggle{{#if showfinished}} active{{/if}}"
+      href="/tasks/toggle/showFinished/">Erledigte
+      {{#if showfinished}}auslenden{{/if}}{{#if invertedshowfinished}}einblenden{{/if}}</a>
   </div>
-  <br />
-  {{/each}}
+  <div id="create-new-row">
+    <a class="link-button create" href="/tasks/new">Neuen Task erstellen</a>
+  </div>
+  <div id="todo-list">
+    {{#each todos}}
+    <div class="todo-item">
+      <div class="todo-finished-date-wrapper">
+        <span>{{displayFinishedByDate}}</span>
+        <span class="todo-finished-indicator {{#if finished}}checked{{/if}}"></span>
+      </div>
+      <div class="todo-content-wrapper">
+        <h3 class="todo-title">{{title}}</h3>
+        <div class="todo-importance">
+          {{#times importance}}
+          <span>🟌</span>
+          {{/times}}
+        </div>
+        <span class="task-description">{{description}}</span>
+      </div>
+      <div class="todo-edit-wrapper">
+        <a class="link-button edit" href="/tasks/{{_id}}">✎</a>
+      </div>
+    </div>
+    <br />
+    {{/each}}
+  </div>
 </div>

@@ -3,7 +3,8 @@ import { tasksController } from '../controller/tasksController';
 const router = express.Router();
 
 router.get('/', tasksController.showTasksDefault.bind(tasksController));
-router.get('/sort/:attr/direction/:dir/showfinished/:shwfin', tasksController.showTasks.bind(tasksController));
+router.get('/sort/:attr/', tasksController.showTasksSorted.bind(tasksController));
+router.get('/toggle/:prop/', tasksController.toggleProp.bind(tasksController));
 
 router.get('/:taskid/', tasksController.showTask.bind(tasksController));
 router.post('/:taskid', tasksController.saveTask.bind(tasksController));

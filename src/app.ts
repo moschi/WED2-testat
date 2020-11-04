@@ -7,6 +7,7 @@ import sassMiddleware = require('node-sass-middleware');
 import indexRouter = require('./routes/index');
 import usersRouter = require('./routes/users');
 import tasksRouter = require('./routes/tasks');
+import hbs from 'hbs';
 import { builtinModules } from 'module';
 
 const app = express();
@@ -15,6 +16,11 @@ const app = express();
 
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'hbs');
+hbs.registerHelper('times', function (n, block) {
+  let accum = '';
+  for (let i = 0; i < n; ++i) accum += block.fn(i);
+  return accum;
+});
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
