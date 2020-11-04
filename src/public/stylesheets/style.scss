@@ -101,7 +101,6 @@ footer {
   display: grid;
   background: #d3d3d321;
   grid-template-columns: 150px auto 90px;
-  //border-bottom: 1px solid gray;
   width: 100%;
 
   .todo-finished-date-wrapper {
@@ -134,7 +133,6 @@ footer {
     grid-template-rows: auto auto;
 
     .task-description {
-      //border: 1px solid gray;
       border-radius: 15px;
       padding: 15px;
       width: 100%;

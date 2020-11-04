@@ -5,7 +5,6 @@ import cookieParser = require('cookie-parser');
 import logger = require('morgan');
 import sassMiddleware = require('node-sass-middleware');
 import indexRouter = require('./routes/index');
-import usersRouter = require('./routes/users');
 import tasksRouter = require('./routes/tasks');
 import hbs from 'hbs';
 import { builtinModules } from 'module';
@@ -38,7 +37,6 @@ app.use(
 );
 app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', indexRouter as express.Application);
-app.use('/users', usersRouter as express.Application);
 app.use('/tasks', tasksRouter as express.Application);
 
 // catch 404 and forward to error handler

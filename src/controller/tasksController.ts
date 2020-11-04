@@ -58,7 +58,6 @@ export class TasksController {
     }
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   buildRequestContext(req: express.Request): any {
     if (req.cookies.init != 'true') {
       return {
@@ -95,8 +94,6 @@ export class TasksController {
     };
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
   showTaskOverview(context: any, req: express.Request, res: express.Response): void {
     res.cookie('sort', context.sort);
     res.cookie('direction', context.direction);
