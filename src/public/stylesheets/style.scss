@@ -1,4 +1,5 @@
 @import 'mixins';
+@import 'colors';
 
 body {
   font-family: 'Lucida Grande', Helvetica, Arial, sans-serif;
@@ -24,7 +25,7 @@ header {
   top: 0;
   padding: 5px;
   display: grid;
-  grid-template-columns: auto auto;
+  grid-template-columns: 80% auto;
 
   span {
     font-size: 26px;
@@ -59,10 +60,6 @@ footer {
   margin-top: 15px;
 }
 
-a {
-  color: #00b7ff;
-}
-
 #task-overview {
   display: grid;
   grid-template-rows: auto auto auto;
@@ -87,6 +84,18 @@ a {
   grid-row: 3;
 }
 
+#list-empty-message {
+  border-radius: 25px;
+  background-color: opacify($color: $warning, $amount: 0.4);
+  font-weight: bold;
+  width: 100%;
+  align-content: center;
+  text-align: center;
+  height: 50px;
+  display: block;
+  padding-top: 20px;
+}
+
 .todo-item {
   padding: 15px;
   display: grid;
@@ -108,12 +117,12 @@ a {
 
     &::before {
       content: '☐';
-      color: firebrick;
+      color: $warning;
     }
 
     &.checked::before {
       content: '✓';
-      color: forestgreen;
+      color: $success;
     }
   }
 
@@ -121,7 +130,7 @@ a {
     width: 100%;
     grid-column: 2;
     display: grid;
-    grid-template-columns: auto auto;
+    grid-template-columns: auto 150px;
     grid-template-rows: auto auto;
 
     .task-description {
@@ -184,62 +193,30 @@ a {
   line-height: 1.5;
   transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out,
     box-shadow 0.15s ease-in-out;
-  background-color: #6c757d;
-  border-color: white;
-  color: #fff;
+  background-color: white;
+  border-color: $active;
+  color: $active;
+
   text-decoration: none;
   margin: 5px;
 
-  &.create {
-    background-color: rgba(59, 107, 148, 0.9);
-
+  &.action {
     &:hover {
-      background-color: rgba(59, 107, 148, 1);
-      border-color: rgba(59, 107, 148, 1);
+      color: white;
+      background-color: $active;
+      border-color: $active;
     }
-  }
-
-  &.edit {
-    background-color: transparent;
-    color: #e0a800;
-    &:hover {
-      background-color: #e0a800;
-      border-color: #d39e00;
-    }
-  }
-
-  &.save {
-    background-color: rgba(77, 162, 65, 0.9);
-
-    &:hover {
-      background-color: rgba(77, 162, 65, 1);
-      border-color: rgba(77, 162, 65, 1);
-      cursor: pointer;
-    }
-  }
-
-  &.cancel {
-    background-color: opacify($color: firebrick, $amount: 0.9);
-    &:hover {
-      background-color: firebrick;
-      border-color: firebrick;
-    }
-  }
-
-  &:hover {
-    color: #212529;
-    background-color: #5a6268;
-    border-color: #5a6268;
   }
 
   &.active {
-    background: rgba(81, 90, 90, 0.9);
+    background: $active;
+    color: white;
     font-weight: bold;
 
     &:hover {
-      color: #212529;
-      background-color: rgba(81, 90, 90, 1);
-      border-color: rgba(81, 90, 90, 1);
+      color: $hover;
+      background-color: $active;
+      border-color: $active;
     }
 
     &.direction-asc::before {
@@ -250,6 +227,46 @@ a {
     &.direction-desc::before {
       content: '⬇';
       font-size: 16px;
+    }
+  }
+
+  &.create {
+    border-color: opacify($color: $create, $amount: 0.9);
+    color: opacify($color: $create, $amount: 0.9);
+
+    &:hover {
+      background-color: $create;
+      color: white;
+    }
+  }
+
+  &.edit {
+    border-color: transparent;
+    background-color: transparent;
+    color: opacify($color: $edit, $amount: 0.9);
+    &:hover {
+      background-color: opacify($color: $edit, $amount: 0.9);
+      border-color: $edit;
+    }
+  }
+
+  &.save {
+    border-color: opacify($color: $success, $amount: 0.9);
+    color: opacify($color: $success, $amount: 0.9);
+
+    &:hover {
+      background-color: $success;
+      color: white;
+      cursor: pointer;
+    }
+  }
+
+  &.cancel {
+    border-color: opacify($color: $warning, $amount: 0.9);
+    color: opacify($color: $warning, $amount: 0.9);
+    &:hover {
+      background-color: $warning;
+      color: white;
     }
   }
 }
@@ -280,6 +297,7 @@ a {
   header {
     padding: 0;
     width: 100%;
+    grid-template-columns: 60% auto;
   }
   .page-content {
     margin-top: 60px;
@@ -327,5 +345,49 @@ a {
   background-color: black;
 
   .link-button {
+    background-color: $active;
+    border-color: white;
+    color: #fff;
+
+    &.active {
+      background: lightgray;
+      color: $active;
+    }
+
+    &.create {
+      background-color: opacify($color: $create, $amount: 0.9);
+
+      &:hover {
+        background-color: $create;
+        border-color: $create;
+      }
+    }
+
+    &.edit {
+      background-color: transparent;
+      color: opacify($color: $edit, $amount: 0.9);
+      &:hover {
+        background-color: opacify($color: $edit, $amount: 0.9);
+        border-color: $edit;
+      }
+    }
+
+    &.save {
+      background-color: opacify($color: $success, $amount: 0.9);
+
+      &:hover {
+        background-color: $success;
+        border-color: $success;
+        cursor: pointer;
+      }
+    }
+
+    &.cancel {
+      background-color: opacify($color: $warning, $amount: 0.9);
+      &:hover {
+        background-color: $warning;
+        border-color: $warning;
+      }
+    }
   }
 }

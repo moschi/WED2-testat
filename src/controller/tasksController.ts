@@ -12,6 +12,7 @@ export class TasksController {
     res.cookie('init', true);
     store.getByFinishedBy(1, false, function (err, tasks) {
       context.todos = tasks;
+      context.isListEmpty = tasks.length == 0;
       res.render('index', context);
     });
   }
@@ -22,9 +23,13 @@ export class TasksController {
       case 'theme':
         context.isDarkmode = !context.isDarkmode;
         break;
-      case 'showFinished':
-        context.showfinished = !context.showfinished;
-        context.invertedshowfinished = !context.invertedshowfinished;
+      case 'showFinished_true':
+        context.showfinished = true;
+        context.invertedshowfinished = false;
+        break;
+      case 'showFinished_false':
+        context.showfinished = false;
+        context.invertedshowfinished = true;
         break;
     }
     console.log(req.cookies.page);
@@ -59,6 +64,7 @@ export class TasksController {
       return {
         sort: 'finished',
         todos: {},
+        isListEmtpy: false,
         direction: -1,
         isDirectionAsc: false,
         isDirectionDesc: true,
@@ -75,6 +81,7 @@ export class TasksController {
       title: 'Taskübersicht',
       sort: req.cookies.sort,
       todos: {},
+      isListEmtpy: false,
       direction: req.cookies.direction,
       isDirectionAsc: req.cookies.direction == 1,
       isDirectionDesc: req.cookies.direction == -1,
@@ -102,18 +109,21 @@ export class TasksController {
       case 'finished':
         store.getByFinishedBy(context.direction, context.showfinished, (err, tasks) => {
           context.todos = tasks;
+          context.isListEmpty = tasks.length == 0;
           res.render('index', context);
         });
         break;
       case 'creation':
         store.getByCreationDate(context.direction, context.showfinished, (err, tasks) => {
           context.todos = tasks;
+          context.isListEmpty = tasks.length == 0;
           res.render('index', context);
         });
         break;
       case 'importance':
         store.getByImportance(context.direction, context.showfinished, (err, tasks) => {
           context.todos = tasks;
+          context.isListEmpty = tasks.length == 0;
           res.render('index', context);
         });
         break;
@@ -122,43 +132,45 @@ export class TasksController {
 
   showTasksSorted(req: express.Request, res: express.Response): void {
     const context = this.buildRequestContext(req);
-    switch (req.params.attr) {
-      case 'finished':
-        if (context.sort == 'finished') {
-          context.direction = req.cookies.direction * -1;
-          context.isDirectionAsc = context.direction == 1;
-          context.isDirectionDesc = context.direction == -1;
-          context.invertedDirection = context.direction * -1;
-        }
-        context.isCreationSorting = false;
-        context.isImportanceSorting = false;
-        context.isFinishedSorting = true;
-        context.sort = 'finished';
-        break;
-      case 'creation':
-        if (context.sort == 'creation') {
-          context.direction = req.cookies.direction * -1;
-          context.isDirectionAsc = context.direction == 1;
-          context.isDirectionDesc = context.direction == -1;
-          context.invertedDirection = context.direction * -1;
-        }
-        context.isCreationSorting = true;
-        context.isImportanceSorting = false;
-        context.isFinishedSorting = false;
-        context.sort = 'creation';
-        break;
-      case 'importance':
-        if (context.sort == 'importance') {
-          context.direction = req.cookies.direction * -1;
-          context.isDirectionAsc = context.direction == 1;
-          context.isDirectionDesc = context.direction == -1;
-          context.invertedDirection = context.direction * -1;
-        }
-        context.isCreationSorting = false;
-        context.isImportanceSorting = true;
-        context.isFinishedSorting = false;
-        context.sort = 'importance';
-        break;
+    if (req.params.attr != context.sort || req.params.dir != context.direction) {
+      switch (req.params.attr) {
+        case 'finished':
+          if (context.sort == 'finished') {
+            context.direction = req.cookies.direction * -1;
+            context.isDirectionAsc = context.direction == 1;
+            context.isDirectionDesc = context.direction == -1;
+            context.invertedDirection = context.direction * -1;
+          }
+          context.isCreationSorting = false;
+          context.isImportanceSorting = false;
+          context.isFinishedSorting = true;
+          context.sort = 'finished';
+          break;
+        case 'creation':
+          if (context.sort == 'creation') {
+            context.direction = req.cookies.direction * -1;
+            context.isDirectionAsc = context.direction == 1;
+            context.isDirectionDesc = context.direction == -1;
+            context.invertedDirection = context.direction * -1;
+          }
+          context.isCreationSorting = true;
+          context.isImportanceSorting = false;
+          context.isFinishedSorting = false;
+          context.sort = 'creation';
+          break;
+        case 'importance':
+          if (context.sort == 'importance') {
+            context.direction = req.cookies.direction * -1;
+            context.isDirectionAsc = context.direction == 1;
+            context.isDirectionDesc = context.direction == -1;
+            context.invertedDirection = context.direction * -1;
+          }
+          context.isCreationSorting = false;
+          context.isImportanceSorting = true;
+          context.isFinishedSorting = false;
+          context.sort = 'importance';
+          break;
+      }
     }
 
     this.showTaskOverview(context, req, res);
@@ -199,7 +211,7 @@ export class TasksController {
 
   saveTask(req: express.Request, res: express.Response): void {
     if (req.params.taskid == 'new') {
-      store.insert(req.body.title, req.body.desc, req.body.importance, req.body.finishedBy);
+      store.insert(req.body.title, req.body.desc, req.body.importance, req.body.finishedBy, req.body.finished === 'on');
     } else {
       store.update(
         req.params.taskid,

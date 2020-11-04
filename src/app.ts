@@ -21,6 +21,9 @@ hbs.registerHelper('times', function (n, block) {
   for (let i = 0; i < n; ++i) accum += block.fn(i);
   return accum;
 });
+hbs.registerHelper('iflistempty', function (list) {
+  return list.lenght == 0;
+});
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));

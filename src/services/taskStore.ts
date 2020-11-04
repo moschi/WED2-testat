@@ -72,8 +72,14 @@ export function getByID(id: string, callback: (err: Error | null, tasks: Task[])
   collection.find({ _id: id }).limit(1).exec(callback);
 }
 
-export function insert(title: string, desc: string, importance: number, finishedBy: Date | null): void {
-  collection.insert(new Task(title, desc, importance, finishedBy, false), function (err, doc) {
+export function insert(
+  title: string,
+  desc: string,
+  importance: number,
+  finishedBy: Date | null,
+  finished: boolean,
+): void {
+  collection.insert(new Task(title, desc, importance, finishedBy, finished), function (err, doc) {
     console.log(doc.title);
   });
 }

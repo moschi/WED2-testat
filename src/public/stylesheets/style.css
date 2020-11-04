@@ -21,7 +21,7 @@ header {
   top: 0;
   padding: 5px;
   display: grid;
-  grid-template-columns: auto auto; }
+  grid-template-columns: 80% auto; }
   header span {
     font-size: 26px;
     font-weight: bold;
@@ -48,9 +48,6 @@ footer {
   padding: 50px;
   margin-top: 15px; }
 
-a {
-  color: #00b7ff; }
-
 #task-overview {
   display: grid;
   grid-template-rows: auto auto auto; }
@@ -69,6 +66,17 @@ a {
 
 #todo-list {
   grid-row: 3; }
+
+#list-empty-message {
+  border-radius: 25px;
+  background-color: firebrick;
+  font-weight: bold;
+  width: 100%;
+  align-content: center;
+  text-align: center;
+  height: 50px;
+  display: block;
+  padding-top: 20px; }
 
 .todo-item {
   padding: 15px;
@@ -94,7 +102,7 @@ a {
     width: 100%;
     grid-column: 2;
     display: grid;
-    grid-template-columns: auto auto;
+    grid-template-columns: auto 150px;
     grid-template-rows: auto auto; }
     .todo-item .todo-content-wrapper .task-description {
       border-radius: 15px;
@@ -144,39 +152,18 @@ a {
   font-size: 1rem;
   line-height: 1.5;
   transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
-  background-color: #6c757d;
-  border-color: white;
-  color: #fff;
+  background-color: white;
+  border-color: #515a5a;
+  color: #515a5a;
   text-decoration: none;
   margin: 5px; }
-  .link-button.create {
-    background-color: rgba(59, 107, 148, 0.9); }
-    .link-button.create:hover {
-      background-color: #3b6b94;
-      border-color: #3b6b94; }
-  .link-button.edit {
-    background-color: transparent;
-    color: #e0a800; }
-    .link-button.edit:hover {
-      background-color: #e0a800;
-      border-color: #d39e00; }
-  .link-button.save {
-    background-color: rgba(77, 162, 65, 0.9); }
-    .link-button.save:hover {
-      background-color: #4da241;
-      border-color: #4da241;
-      cursor: pointer; }
-  .link-button.cancel {
-    background-color: firebrick; }
-    .link-button.cancel:hover {
-      background-color: firebrick;
-      border-color: firebrick; }
-  .link-button:hover {
-    color: #212529;
-    background-color: #5a6268;
-    border-color: #5a6268; }
+  .link-button.action:hover {
+    color: white;
+    background-color: #515a5a;
+    border-color: #515a5a; }
   .link-button.active {
-    background: rgba(81, 90, 90, 0.9);
+    background: #515a5a;
+    color: white;
     font-weight: bold; }
     .link-button.active:hover {
       color: #212529;
@@ -188,6 +175,32 @@ a {
     .link-button.active.direction-desc::before {
       content: '⬇';
       font-size: 16px; }
+  .link-button.create {
+    border-color: #3b6b94;
+    color: #3b6b94; }
+    .link-button.create:hover {
+      background-color: #3b6b94;
+      color: white; }
+  .link-button.edit {
+    border-color: transparent;
+    background-color: transparent;
+    color: #d39e00; }
+    .link-button.edit:hover {
+      background-color: #d39e00;
+      border-color: #d39e00; }
+  .link-button.save {
+    border-color: forestgreen;
+    color: forestgreen; }
+    .link-button.save:hover {
+      background-color: forestgreen;
+      color: white;
+      cursor: pointer; }
+  .link-button.cancel {
+    border-color: firebrick;
+    color: firebrick; }
+    .link-button.cancel:hover {
+      background-color: firebrick;
+      color: white; }
 
 #edit-task-form {
   margin-top: 15px;
@@ -223,7 +236,8 @@ a {
 @media only screen and (max-width: 678px) {
   header {
     padding: 0;
-    width: 100%; }
+    width: 100%;
+    grid-template-columns: 60% auto; }
   .page-content {
     margin-top: 60px;
     padding: 0; }
@@ -255,5 +269,34 @@ a {
 .darkmode {
   color: lightgray;
   background-color: black; }
+  .darkmode .link-button {
+    background-color: #515a5a;
+    border-color: white;
+    color: #fff; }
+    .darkmode .link-button.active {
+      background: lightgray;
+      color: #515a5a; }
+    .darkmode .link-button.create {
+      background-color: #3b6b94; }
+      .darkmode .link-button.create:hover {
+        background-color: #3b6b94;
+        border-color: #3b6b94; }
+    .darkmode .link-button.edit {
+      background-color: transparent;
+      color: #d39e00; }
+      .darkmode .link-button.edit:hover {
+        background-color: #d39e00;
+        border-color: #d39e00; }
+    .darkmode .link-button.save {
+      background-color: forestgreen; }
+      .darkmode .link-button.save:hover {
+        background-color: forestgreen;
+        border-color: forestgreen;
+        cursor: pointer; }
+    .darkmode .link-button.cancel {
+      background-color: firebrick; }
+      .darkmode .link-button.cancel:hover {
+        background-color: firebrick;
+        border-color: firebrick; }
 
 /*# sourceMappingURL=style.css.map */
