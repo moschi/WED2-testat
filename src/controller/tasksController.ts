@@ -20,8 +20,13 @@ export class TasksController {
   toggleProp(req: express.Request, res: express.Response): void {
     const context = this.buildRequestContext(req);
     switch (req.params.prop) {
-      case 'theme':
-        context.isDarkmode = !context.isDarkmode;
+      case 'theme_dark_true':
+        context.isDarkmode = true;
+        context.invertedisDarkmode = false;
+        break;
+      case 'theme_dark_false':
+        context.isDarkmode = false;
+        context.invertedisDarkmode = true;
         break;
       case 'showFinished_true':
         context.showfinished = true;
@@ -42,6 +47,7 @@ export class TasksController {
             _id: 'new',
           },
           isDarkmode: context.isDarkmode,
+          invertedisDarkmode: !context.isDarkmode,
           title: 'Task erstellen',
         };
         this.showTaskInternal(taskContext, req, res);
@@ -50,6 +56,7 @@ export class TasksController {
           const taskContext = {
             task: tasks[0],
             isDarkmode: context.isDarkmode,
+            invertedisDarkmode: !context.isDarkmode,
             title: 'Task bearbeiten',
           };
           this.showTaskInternal(taskContext, req, res);
@@ -74,6 +81,7 @@ export class TasksController {
         showfinished: false,
         invertedshowfinished: true,
         isDarkmode: true,
+        invertedisDarkmode: false,
       };
     }
     return {
@@ -91,6 +99,7 @@ export class TasksController {
       isCreationSorting: req.cookies.sort == 'creation',
       isImportanceSorting: req.cookies.sort == 'importance',
       isDarkmode: req.cookies.isDarkmode == 'true',
+      invertedisDarkmode: req.cookies.isDarkmode != 'true',
     };
   }
 
@@ -182,6 +191,7 @@ export class TasksController {
       const context = {
         task: tasks[0],
         isDarkmode: req.cookies.isDarkmode == 'true',
+        invertedisDarkmode: req.cookies.isDarkmode != 'true',
         title: 'Task bearbeiten',
       };
       this.showTaskInternal(context, req, res);
@@ -201,6 +211,7 @@ export class TasksController {
         _id: 'new',
       },
       isDarkmode: req.cookies.isDarkmode == 'true',
+      invertedisDarkmode: req.cookies.isDarkmode != 'true',
       title: 'Task erstellen',
     };
     this.showTaskInternal(context, req, res);
